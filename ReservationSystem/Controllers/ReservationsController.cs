@@ -56,7 +56,7 @@ namespace ReservationSystem.Controllers
         }
         // GET: api/Reservation/user/username
         [HttpGet("user/{username}")]
-        public async Task<ActionResult<IEnumerable<Reservation>>> GetReservations(String username)
+        public async Task<ActionResult<IEnumerable<ReservationDTO>>> GetReservations(String username)
         {
             return Ok(await _service.GetAllReservationsForUser(username));
 
@@ -66,7 +66,7 @@ namespace ReservationSystem.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutReservation(long id, Reservation reservation)
+        public async Task<IActionResult> PutReservation(long id, ReservationDTO reservation)
         {
             //if (id != reservation.Id)
             //{
@@ -117,7 +117,7 @@ namespace ReservationSystem.Controllers
 
         // DELETE: api/Reservations/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Reservation>> DeleteReservation(long id)
+        public async Task<ActionResult<ReservationDTO>> DeleteReservation(long id)
         {
             // var reservation = await _context.Reservations.FindAsync(id);
             // if (reservation == null)

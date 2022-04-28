@@ -44,7 +44,7 @@ namespace ReservationSystem.Controllers
         }
         // GET: api/Items/5
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<IEnumerable<Item>>> GetItems(long id)
+        public async Task<ActionResult<IEnumerable<ItemDTO>>> GetItems(long id)
         {
             /*
             var item = await _context.Items.FindAsync(id);
@@ -81,7 +81,7 @@ namespace ReservationSystem.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutItem(long id, Item item)
+        public async Task<IActionResult> PutItem(long id, ItemDTO item)
         {
             // if (id != item.Id)
             // {
@@ -114,7 +114,7 @@ namespace ReservationSystem.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Item>> PostItem(ItemDTO item)
+        public async Task<ActionResult<ItemDTO>> PostItem(ItemDTO item)
         {
             //Tarkista onko oikeus muokata?
             bool isAllowed = await _authenticationService.IsAllowed(this.User.FindFirst(ClaimTypes.Name).Value, item);
@@ -134,7 +134,7 @@ namespace ReservationSystem.Controllers
 
         // DELETE: api/Items/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Item>> DeleteItem(long id)
+        public async Task<ActionResult<ItemDTO>> DeleteItem(long id)
         {
             //var item = await _context.Items.FindAsync(id);
             //if (item == null)

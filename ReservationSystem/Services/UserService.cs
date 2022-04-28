@@ -81,6 +81,16 @@ namespace ReservationSystem.Services
             return UserToDTO(updatedUser);
         }
 
+        public async Task<UserDTO> GetUserAsync(string username)
+        {
+            User user = (await _repository.GetUserAsync(username));
+            if (user == null)
+            {
+                return null;
+            }
+            return UserToDTO(user);
+        }
+
         private User DTOToUser(UserDTO user, String password)
         {
             User newUser = new User();
