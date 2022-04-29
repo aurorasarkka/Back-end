@@ -123,6 +123,25 @@ namespace ReservationSystem.Services
             return reservation;
         }
 
+        public async Task<IEnumerable<ReservationDTO>> GetAllReservationsForItem(long id)
+        {
+            Item target = await _itemRepository.GetItemAsync(id);
+
+
+            if (target == null)
+            {
+                return null;
+            }
+            IEnumerable<Reservation> reservations = await _repository.GetReservationsAsync(target);
+            List<ReservationDTO> dTOs = new List<ReservationDTO>();
+            foreach (Reservation r in reservations)
+            {
+                dTOs.Add(ReservationToDTO(r));
+            }
+            return dTOs;
+
+        }
+
     }
 
 }

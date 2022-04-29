@@ -17,44 +17,52 @@ namespace ReservationSystem.Controllers
     [ApiController]
     public class ReservationsController : ControllerBase
     {
-        //private readonly ReservationContext _context;
+        private readonly ReservationContext _context;
         private readonly IReservationService _service;
         private readonly IUserAuthenticationService _authenticationService;
 
 
-        public ReservationsController(IReservationService service, IUserAuthenticationService authenticationService)
+        public ReservationsController(IReservationService service, IUserAuthenticationService authenticationService, ReservationContext context)
         {
             _service = service;
             _authenticationService = authenticationService;
+            _context = context;
         }
 
         // GET: api/Reservations
+        /// <summary>
+        /// Gets reservations
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult<ReservationDTO>> GetReservations(long id)
+        public async Task<ActionResult<IEnumerable<ReservationDTO>>> GetReservations()
         {
-            // return await _context.Reservations.ToListAsync();
-            ReservationDTO dto = await _service.GetReservation(id);
-            if (dto == null)
-            {
-                return NotFound();
-            }
-            return Ok(await _service.GetReservation(id));
+            return Ok(await _service.GetAllReservations());
         }
 
         
         // GET: api/Reservations/5
+        /// <summary>
+        /// Gets reservations via id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<IEnumerable<ReservationDTO>>> GetReservation(long id)
         {
-            /*var reservation = await _context.Reservations.FindAsync(id);
-         if (reservation == null)
+            var reservation = await _service.GetReservation(id);
+            if (reservation == null)
          {
              return NotFound();
          }
-         return reservation;*/
-            return Ok(await _service.GetAllReservations());
+            return Ok(reservation);
         }
         // GET: api/Reservation/user/username
+        /// <summary>
+        /// Gets reservation via username
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
         [HttpGet("user/{username}")]
         public async Task<ActionResult<IEnumerable<ReservationDTO>>> GetReservations(String username)
         {
@@ -63,15 +71,21 @@ namespace ReservationSystem.Controllers
         }
 
         // PUT: api/Reservations/5
+        /// <summary>
+        /// Edit reservation
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="reservation"></param>
+        /// <returns></returns>
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
         public async Task<IActionResult> PutReservation(long id, ReservationDTO reservation)
         {
-            //if (id != reservation.Id)
-            //{
-             //   return BadRequest();
-            //}
+            if (id != reservation.Id)
+            {
+                return BadRequest();
+            }
 
            // _context.Entry(reservation).State = EntityState.Modified;
 
@@ -95,6 +109,11 @@ namespace ReservationSystem.Controllers
         }
 
         // POST: api/Reservations
+        /// <summary>
+        /// Make a reservation
+        /// </summary>
+        /// <param name="reservation"></param>
+        /// <returns></returns>
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
@@ -115,21 +134,26 @@ namespace ReservationSystem.Controllers
             
         }
 
-        // DELETE: api/Reservations/5
+        // DELETE: api/reservations/5
+        /// <summary>
+        /// Delete a reservation
+        /// </summary>
+        /// <param name="id">Id of user to be deleted</param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
-        public async Task<ActionResult<ReservationDTO>> DeleteReservation(long id)
+        public async Task<ActionResult<Reservation>> DeleteReservation(long id)
         {
-            // var reservation = await _context.Reservations.FindAsync(id);
-            // if (reservation == null)
-            // {
-            //     return NotFound();
-            // }
+             var reservation = await _context.Reservations.FindAsync(id);
+             if (reservation == null)
+             {
+                 return NotFound();
+             }
 
-            //  _context.Reservations.Remove(reservation);
-            // await _context.SaveChangesAsync();
+             _context.Reservations.Remove(reservation);
+             await _context.SaveChangesAsync();
 
-            // return reservation;
-            return null;
+             return reservation;
+            //return null;
         }
     }
 }

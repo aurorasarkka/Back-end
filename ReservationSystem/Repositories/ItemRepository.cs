@@ -39,17 +39,26 @@ namespace ReservationSystem.Repositories
             return await _context.Items.Include(i => i.Owner).ToListAsync();
         }
 
-        public Task<User> GetUserAsync(long id)
+        public async Task<User> GetUserAsync(long id)
         {
-            throw new NotImplementedException();
+            return await _context.Users.FindAsync(id);
         }
 
-        internal Task<Item> CreateItemAsync(Item item)
-        {
-            throw new NotImplementedException();
-        }
+        /*internal async Task<Item> CreateItemAsync(Item item)
+       {
+           throw new NotImplementedException();
+      _context.Items.(item);
+           try
+           {
+               await _context.SaveChangesAsync();
+           }
+           catch (Exception)
+           {
+           }
+           return item;
+       }*/
 
-       
+
         public async Task<IEnumerable<Item>> GetItemsOfUser(User user)
         {
             return await _context.Items.Include(i => i.Owner).Where(x => x.Owner == user).ToListAsync();
