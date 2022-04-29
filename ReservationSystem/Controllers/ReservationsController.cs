@@ -87,23 +87,24 @@ namespace ReservationSystem.Controllers
                 return BadRequest();
             }
 
-           // _context.Entry(reservation).State = EntityState.Modified;
+            _context.Entry(reservation).State = EntityState.Modified;
 
-            //try
-           // {
-            //    await _context.SaveChangesAsync();
-           // }
-           // catch (DbUpdateConcurrencyException)
-           // {
-            //    if (!ReservationExists(id))
-            //    {
-                 //   return NotFound();
-               // }
-               // else
-              //  {
-              //      throw;
-             //   }
-            //}
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return null;
+                //    if (!ReservationExists(id))
+                //    {
+                //   return NotFound();
+                // }
+                // else
+                //  {
+                //      throw;
+                //   }
+            }
 
             return NoContent();
         }
