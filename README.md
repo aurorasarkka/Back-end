@@ -1,6 +1,6 @@
 # Back-end
 
-HArjoitus työ Back -end kurssille.
+Harjoitustyö Back -end kurssille.
 
 
 Sovelluksen tarkoituksena on, että sinne voidaan lisätä varattavia kohteita ja käyttäjät voivat varata niitä haluamilleen ajoille.Käyttäjät voivat luoda varattavia kohteita. Käyttäjät voivat myös luoda varauksia. Omia kohteita ja varauksia voi muokata/poistaa.
